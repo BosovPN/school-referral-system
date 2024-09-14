@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "tsc && node dist/app.js",
-    "dev": "ts-node-dev --respawn --transpile-only src/app.ts"
+    "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
+    "migrate:latest": "ts-node src/node_modules/.bin/knex migrate:latest --knexfile src/config/knexfile.ts",
+    "migrate:rollback": "ts-node src/node_modules/.bin/knex migrate:rollback --knexfile src/config/knexfile.ts",
+    "seed:run": "ts-node src/node_modules/.bin/knex seed:run --knexfile src/config/knexfile.ts"
   },
   "keywords": [],
   "author": "",
@@ -21,10 +24,12 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
+    "@types/knex": "^0.15.2",
     "@types/node": "^22.5.4",
     "jest": "^29.7.0",
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.6.2"
   }
