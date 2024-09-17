@@ -4,27 +4,119 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* Form container */
+        .form-container {
+            background-color: #fff;
+            padding: 30px; /* Added padding */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        /* Form styling */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Added gap between elements */
+        }
+
+        label {
+            margin-bottom: 5px; /* Reduced margin */
+            color: #333;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            padding: 12px; /* Increased padding */
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            width: 100%; /* Ensure full width input */
+            box-sizing: border-box; /* Prevent input from overflowing */
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        button {
+            padding: 12px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .hidden-field {
+            display: none;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .form-container {
+                width: 90%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Register</h1>
-    <form action="/api/register" method="POST">
-        <label for="surname">Surname:</label>
-        <input type="text" id="surname" name="surname" required>
-        <br>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        <br>
-        <label for="patronymic">Patronymic:</label>
-        <input type="text" id="patronymic" name="patronymic">
-        <br>
-        <label for="phone">Phone:</label>
-        <input type="text" id="phone" name="phone" required>
-        <br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <br>
-        <input type="hidden" name="referral_code" value="<%= referralCode %>">
-        <button type="submit">Register</button>
-    </form>
+    <div class="form-container">
+        <h1>Register</h1>
+        <form action="/api/register" method="POST">
+            <label for="surname">Surname:</label>
+            <input type="text" id="surname" name="surname" required>
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="patronymic">Patronymic:</label>
+            <input type="text" id="patronymic" name="patronymic">
+
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" name="phone" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <input type="hidden" name="referral_code" value="<%= referralCode %>">
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
 </body>
 </html>

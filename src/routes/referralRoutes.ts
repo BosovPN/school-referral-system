@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { stubController } from "../controllers/stubController";
-import { createReferralLink, listInvitees, registerStudent, showRegistrationForm } from "../controllers/referralController";
+import { createReferralLink, getReferralStats, listInvitees, registerStudent, showRegistrationForm } from "../controllers/referralController";
 
 const referralRoutes = Router();
 
@@ -20,6 +20,6 @@ referralRoutes.get('/invitees', listInvitees);
 referralRoutes.post('/payment', stubController('processPayment'));
 
 // Getting statistics on invited students
-referralRoutes.get('/stats', stubController('getReferralStats'));
+referralRoutes.get('/stats', getReferralStats);
 
 export default referralRoutes;

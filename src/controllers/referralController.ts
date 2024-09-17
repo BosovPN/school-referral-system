@@ -3,7 +3,8 @@ import db from "../db";
 import { v4 as uuidv4 } from 'uuid';
 import Joi from "joi";
 import { body, validationResult } from "express-validator";
-import { totalmem } from "os";
+import bcrypt from 'bcrypt';
+
 
 
 const referralSchema = Joi.object({
@@ -92,6 +93,10 @@ export const registerStudent = [
     body('name').notEmpty().withMessage('Fullname is required'),
     body('phone').matches(/^\+?[78]\d{10}$/).withMessage('Valid phone number is required'),
     body('email').isEmail().withMessage('Valid email is required'),
+    body('password')
+        .isLength({ min: 8 }).withMessage('Password must be at least 8 characters long')
+        .matches(/\d/).withMessage('Password must contain a number')
+        .matches(/[!@#$%^&*(),.?":{}|<>]/).withMessage('Password must contain a special character'),
     body('referral_code').notEmpty().withMessage('Referral code is required'),
 
     async (req: Request, res: Response) => {
@@ -108,6 +113,9 @@ export const registerStudent = [
             if (!referralInfo) {
                 return res.status(400).json({ error: 'Invalid referral code' });
             }
+            
+            const saltRounds = 10;
+            const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
 
             //Student registration
             const [student] = await db('users').insert({
@@ -115,6 +123,7 @@ export const registerStudent = [
                 name,
                 phone,
                 email,
+                password: hashedPassword,
             }).returning('id');
 
             const studentId = student.id;
@@ -165,6 +174,24 @@ export const listInvitees = async (req: Request, res: Response) => {
         return res.status(200).json(invitees);
     } catch (error: any) {
         console.error('Error fetching invitees', error);
+        return res.status(500).json({
+            message: 'Server error',
+            error: error.message || 'Unknown error',
+        });
+    }
+}
+
+export const getReferralStats = async (req: Request, res: Response) => {
+    try {
+        // Fetch referral statistics
+        const stats = await db('statistics')
+            .join('users', 'statistics.referrer_id', '=', 'users.id')
+            .select('users.name', 'users.email', 'statistics.total_invites')
+            .orderBy('total_invites', 'desc');
+
+        return res.status(200).json(stats);
+    } catch (error: any) {
+        console.error('Error fetching referral statistics', error);
         return res.status(500).json({
             message: 'Server error',
             error: error.message || 'Unknown error',
