@@ -3,7 +3,7 @@ import { createReferralLink, getReferralStats } from "../controllers/referralCon
 import { showRegistrationForm } from "../controllers/registrationFormController";
 import { registerStudent } from "../controllers/registrationController";
 import { listInvitees } from "../controllers/inviteeController";
-import { stubController } from "../controllers/stubController";
+import { createPayment, getAllPayments } from "../controllers/paymentController";
 
 const referralRoutes = Router();
 
@@ -19,8 +19,11 @@ referralRoutes.post('/register', registerStudent);
 // List all invitees
 referralRoutes.get('/invitees', listInvitees);
 
+// Get payments info
+referralRoutes.get('/payments', getAllPayments);
+
 // Payment processing
-referralRoutes.post('/payment', stubController('processPayment'));
+referralRoutes.post('/payments', createPayment);
 
 // Getting statistics on invited students
 referralRoutes.get('/stats', getReferralStats);

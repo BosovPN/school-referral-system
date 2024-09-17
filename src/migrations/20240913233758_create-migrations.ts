@@ -35,15 +35,20 @@ export async function up(knex: Knex): Promise<void> {
     table.index(['referral_id', 'invitee_id']);
   });
 
-  // Payment table
+  // Payments table
   await knex.schema.createTable('payments', (table) => {
     table.increments('id').primary();
     table.integer('user_id').unsigned().references('id').inTable('users').notNullable().onDelete('CASCADE');
-    table.decimal('amount').notNullable();
+    table.string('payment_intent_id').notNullable(); // Stripe payment intent ID
+    table.decimal('amount', 14, 2).notNullable(); // Amount in dollars
+    table.string('currency').defaultTo('rub').notNullable(); // Currency code
+    table.enu('status', ['succeeded', 'pending', 'failed']).defaultTo('pending'); // Payment status
     table.timestamps(true, true);
 
-    //index on the user_id for performance optimization
+    // Index on the user_id for performance optimization
     table.index('user_id');
+    // Index on paymentIntentId for querying by Stripe payment intent ID
+    table.index('payment_intent_id');
   });
 
   // Lessons table
