@@ -1,13 +1,20 @@
 import { Router } from "express";
 import { stubController } from "../controllers/stubController";
+import { createReferralLink, listInvitees, registerStudent, showRegistrationForm } from "../controllers/referralController";
 
 const referralRoutes = Router();
 
 // Referral link generation
-referralRoutes.post('/generate-referral-link', stubController('generateReferralLink'));
+referralRoutes.post('/generate-referral-link', createReferralLink);
+
+// Show registration form
+referralRoutes.get('/register', showRegistrationForm);
 
 // Student registration
-referralRoutes.post('/register', stubController('registerStudent'));
+referralRoutes.post('/register', registerStudent);
+
+// List all invitees
+referralRoutes.get('/invitees', listInvitees);
 
 // Payment processing
 referralRoutes.post('/payment', stubController('processPayment'));
