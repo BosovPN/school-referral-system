@@ -1,6 +1,9 @@
 import { Router } from "express";
+import { createReferralLink, getReferralStats } from "../controllers/referralController";
+import { showRegistrationForm } from "../controllers/registrationFormController";
+import { registerStudent } from "../controllers/registrationController";
+import { listInvitees } from "../controllers/inviteeController";
 import { stubController } from "../controllers/stubController";
-import { createReferralLink, getReferralStats, listInvitees, registerStudent, showRegistrationForm } from "../controllers/referralController";
 
 const referralRoutes = Router();
 
