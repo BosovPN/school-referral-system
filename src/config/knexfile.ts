@@ -11,6 +11,7 @@ dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 // Rollback migration:
 // npx knex migrate:rollback --knexfile src/config/knexfile.ts
 // Launch seed:
+// npx knex seed:make create_admin_user --knexfile src/config/knexfile.ts
 // npx knex seed:run --knexfile src/config/knexfile.ts
 
 const connectionString = process.env.DATABASE_URL;

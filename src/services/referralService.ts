@@ -34,3 +34,16 @@ export const getReferralStats = async () => {
         .select('users.name', 'users.email', 'statistics.total_invites')
         .orderBy('total_invites', 'desc');
 };
+
+export const updateReferralStats = async (referrerId: number) => {
+    const stats = await db('statistics').where('referrer_id', referrerId).first();
+
+    if (stats) {
+        await db('statistics').where('referrer_id', referrerId).increment('total_invites', 1);
+    } else {
+        await db('statistics').insert({
+            referrer_id: referrerId,
+            total_invites: 1,
+        });
+    }
+};

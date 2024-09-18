@@ -4,6 +4,20 @@ import { body, validationResult } from "express-validator";
 import * as referralService from "../services/referralService";
 import * as userService from "../services/userService";
 import * as lessonService from "../services/lessonService";
+import * as inviteeService from "../services/inviteeService";
+
+
+export const loginUser = async (req: Request, res: Response) => {
+    const { email, password } = req.body;
+
+    try {
+        const { token } = await userService.loginUser(email, password);
+        res.json({ token });
+    } catch (error: any) {
+        res.status(401).json({ message: error.message });
+    }
+};
+
 
 export const registerStudent = [
     body('surname').notEmpty().withMessage('Surname is required'),
@@ -38,10 +52,10 @@ export const registerStudent = [
             });
 
             // Track the referral in invitees table
-            await userService.addInvitee(referralInfo.id, studentId);
+            await inviteeService.addInvitee(referralInfo.id, studentId);
 
             // Track the referral statistics
-            await userService.updateReferralStats(referralInfo.referrer_id);
+            await referralService.updateReferralStats(referralInfo.referrer_id);
 
             // Add lessons for both referrer and invitee
             await lessonService.addLessonsForUsers(referralInfo.referrer_id, studentId);
@@ -56,3 +70,11 @@ export const registerStudent = [
         }
     }
 ];
+
+export const showRegistrationForm = (req: Request, res: Response) => {
+    const referralCode = req.query.ref as string;
+    if (!referralCode) {
+        return res.status(400).json({ error: 'Referral code is required' });
+    }
+    res.render('register', { referralCode });
+};

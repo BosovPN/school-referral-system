@@ -11,3 +11,11 @@ export const getAllInvitees = async () => {
         throw new Error('Failed to retrieve invitees');
     }
 };
+
+
+export const addInvitee = async (referralId: number, inviteeId: number) => {
+    await db('invitees').insert({
+        referral_id: referralId,
+        invitee_id: inviteeId,
+    });
+};
