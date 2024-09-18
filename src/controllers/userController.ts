@@ -37,15 +37,16 @@ export const registerStudent = [
         }
 
         try {
-            const { surname, name, phone, email, password, referral_code } = req.body;
+            const { surname, name, patronymic, phone, email, password, referral_code } = req.body;
 
             // Check if referral link exists
             const referralInfo = await referralService.getReferralInfo(referral_code);
 
             // Register user
-            const [studentId] = await userService.createUser({
+            const studentId = await userService.createUser({
                 surname,
                 name,
+                patronymic,
                 phone,
                 email,
                 password

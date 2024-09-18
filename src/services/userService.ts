@@ -31,6 +31,7 @@ export const loginUser = async (email: string, password: string) => {
 export const createUser = async (userData: {
     surname: string;
     name: string;
+    patronymic: string;
     phone: string;
     email: string;
     password: string;
