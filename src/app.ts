@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import referralRoutes from './routes/referralRoutes';
 import cors from 'cors';
 import path from 'path';
-
+import logger from './utils/logger';
 dotenv.config();
 
 const app = express();
@@ -13,6 +13,12 @@ const corsOptions = {
     methods: ['GET', 'POST', 'PUT', 'DELETE'], 
     allowedHeaders: ['Content-Type', 'Authorization'], 
 };
+
+app.use((req, res, next) => {
+    logger.info(`Request: ${req.method} ${req.url}`);
+    next();
+});
+
 
 // Set EJS as the template engine
 app.set('view engine', 'ejs');

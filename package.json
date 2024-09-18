@@ -29,7 +29,8 @@
     "pg": "^8.12.0",
     "redis": "^4.7.0",
     "stripe": "^16.11.0",
-    "uuid": "^10.0.0"
+    "uuid": "^10.0.0",
+    "winston": "^3.14.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",

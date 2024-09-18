@@ -7,3 +7,5 @@ dist/
 *.tsbuildinfo
 yarn.lock
 package-lock.json
+combined.log
+error.log
