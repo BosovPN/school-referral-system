@@ -3,11 +3,11 @@
 
 Cloning the repository
 ```bash
-git clone https://github.com/BosovPN/cryptocurrency_tracker.git
+git clone https://github.com/BosovPN/school-referral-system.git
 ```
 Move into the backend directory where we have the project files 
 ```bash
-cd .\cryptocurrency_tracker\backend
+cd school-referral-system/
 ```
 
 Install the dependencies
